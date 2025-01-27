@@ -7,3 +7,4 @@ https://www.reddit.com/r/guitarpedals/comments/jz014d/does_anyone_have_the_midi_
 
 https://static.roland.com/assets/media/pdf/RC-5_reference_eng01_W.pdf
 
+https://www.youtube.com/watch?v=ydvE6gHhRGA&list=LL&index=31&t=9s
