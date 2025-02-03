@@ -103,6 +103,7 @@ void loop()
   {
     Serial.println("button1 pressed");
     MIDI.sendControlChange(80, 127, 1);
+    delay(10);
     MIDI.sendControlChange(80, 0, 1);
     Serial.println("leaving button1 pressed");
   }
@@ -111,6 +112,7 @@ void loop()
   {
     Serial.println("button2 pressed");
     MIDI.sendControlChange(81, 127, 1);
+    delay(10);
     MIDI.sendControlChange(81, 0, 1);
     Serial.println("leaving button2 pressed");
   }
@@ -118,6 +120,7 @@ void loop()
   if (button3.isPressed()) // Redo/Undo
   {
     MIDI.sendControlChange(82, 127, 1);
+    delay(10);
     MIDI.sendControlChange(82, 0, 1);
   }
 
@@ -141,12 +144,14 @@ void loop()
   if (button5.isPressed()) // Start Rhythm
   {
     MIDI.sendControlChange(84, 127, 1);
+    delay(10);
     MIDI.sendControlChange(84, 0, 1);
   }
 
   if (button6.isPressed()) // Stop Rhythm
   {
     MIDI.sendControlChange(85, 127, 1);
+    delay(10);
     MIDI.sendControlChange(85, 0, 1);
   }
 
@@ -166,7 +171,8 @@ void loop()
   if (button8.isPressed()) // Clear
   {
     MIDI.sendControlChange(87, 127, 1);
+    delay(10);
     MIDI.sendControlChange(87, 0, 1);
   }
-
+  delay(200);
 }
