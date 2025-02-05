@@ -5,14 +5,14 @@
 
 MIDI_CREATE_DEFAULT_INSTANCE();
 
-ezButton button1(13);
-ezButton button2(12);
-ezButton button3(11);
-ezButton button4(10);
-ezButton button5(9);
-ezButton button6(6);
-ezButton button7(5);
-ezButton button8(4);
+ezButton button1(13, INPUT_PULLUP);
+ezButton button2(12, INPUT_PULLUP);
+ezButton button3(11, INPUT_PULLUP);
+ezButton button4(10, INPUT_PULLUP);
+ezButton button5(9, INPUT_PULLUP);
+ezButton button6(6, INPUT_PULLUP);
+ezButton button7(5, INPUT_PULLUP);
+ezButton button8(4, INPUT_PULLUP);
 
 int dbTime = 50;
 boolean reverse = false;
@@ -30,6 +30,7 @@ LiquidCrystal_I2C lcd8 (0x20, 16, 2);
 void setup()
 {
   Serial.begin(9600);
+
   MIDI.begin(1);
   button1.setDebounceTime(dbTime);
   button2.setDebounceTime(dbTime);
@@ -82,6 +83,13 @@ void setup()
   lcd7.print("Start/Stop      ");
   lcd8.print("Clear           ");
 
+
+  Serial.println("INPUT_PULLUP is ");
+  Serial.println(INPUT_PULLUP);
+  Serial.println("INTERNAL_PULLUP is ");
+  Serial.println(INTERNAL_PULLUP);
+  
+
   delay(1000);
 }
 
@@ -103,7 +111,7 @@ void loop()
   {
     Serial.println("button1 pressed");
     MIDI.sendControlChange(80, 127, 1);
-    delay(10);
+    delay(50);
     MIDI.sendControlChange(80, 0, 1);
     Serial.println("leaving button1 pressed");
   }
@@ -112,7 +120,7 @@ void loop()
   {
     Serial.println("button2 pressed");
     MIDI.sendControlChange(81, 127, 1);
-    delay(10);
+    delay(50);
     MIDI.sendControlChange(81, 0, 1);
     Serial.println("leaving button2 pressed");
   }
@@ -120,7 +128,7 @@ void loop()
   if (button3.isPressed()) // Redo/Undo
   {
     MIDI.sendControlChange(82, 127, 1);
-    delay(10);
+    delay(50);
     MIDI.sendControlChange(82, 0, 1);
   }
 
@@ -132,26 +140,28 @@ void loop()
       lcd4.clear();
       lcd4.print("Reversing...    ");
       MIDI.sendControlChange(83, 127, 1);
+      delay(50);
     } 
     else
     {
       lcd4.clear();
       lcd4.print("Forward.....    ");
       MIDI.sendControlChange(83, 0, 1);
+      delay(50);
     }
   }
 
   if (button5.isPressed()) // Start Rhythm
   {
     MIDI.sendControlChange(84, 127, 1);
-    delay(10);
+    delay(50);
     MIDI.sendControlChange(84, 0, 1);
   }
 
   if (button6.isPressed()) // Stop Rhythm
   {
     MIDI.sendControlChange(85, 127, 1);
-    delay(10);
+    delay(50);
     MIDI.sendControlChange(85, 0, 1);
   }
 
@@ -161,18 +171,19 @@ void loop()
     if (start)
     {
       MIDI.sendControlChange(86, 127, 1);
+      delay(50);
     }
     else 
     {
       MIDI.sendControlChange(86, 0, 1);
+      delay(50);
     }
   }
 
   if (button8.isPressed()) // Clear
   {
     MIDI.sendControlChange(87, 127, 1);
-    delay(10);
+    delay(50);
     MIDI.sendControlChange(87, 0, 1);
   }
-  delay(200);
 }
