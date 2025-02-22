@@ -14,10 +14,18 @@ ezButton button6(6, INPUT_PULLUP);
 ezButton button7(5, INPUT_PULLUP);
 ezButton button8(4, INPUT_PULLUP);
 
-int dbTime = 50;
+int dbTime = 60;
 bool reverse = false;
 //boolean start = false;
 bool startup = true;
+int button1_count = 0;
+int button2_count = 0;
+int button3_count = 0;
+int button4_count = 0;
+int button5_count = 0;
+int button6_count = 0;
+int button7_count = 0;
+int button8_count = 0;
 
 LiquidCrystal_I2C lcd1 (0x27, 16, 2);
 LiquidCrystal_I2C lcd2 (0x26, 16, 2);
@@ -92,7 +100,7 @@ void setup()
   Serial.println(INTERNAL_PULLUP);
 */
 
-  delay(5000);
+  delay(1000);
 }
 
 // https://static.roland.com/assets/media/pdf/RC-5_reference_eng01_W.pdf
@@ -109,12 +117,18 @@ void loop()
 
   if(button1.isReleased()) // Memory up one
   {
-    basic_midi_controll(80, 1);
+    if(button1_count != button1.getCount())
+    {
+      basic_midi_controll(80, 1);
+    }
   }
 
   if(button2.isReleased()) // Memory down one
   {
-    basic_midi_controll(81, 2);
+    if(button2_count != button2.getCount())
+    {
+      basic_midi_controll(81, 2);
+    }
   }
 
   if(button3.isReleased()) // Redo/Undo
@@ -150,7 +164,10 @@ void loop()
 
   if (button5.isReleased()) // Start Rhythm
   {
-    basic_midi_controll(84, 5);
+    if(button5_count != button5.getCount())
+    {
+      basic_midi_controll(84, 5);
+    }
   }
 
   if (button6.isReleased()) // Stop Rhythm
@@ -165,14 +182,17 @@ void loop()
 
   if (button8.isReleased()) // Clear
   {
-    basic_midi_controll(87, 8);
+    if(button8_count != button8.getCount())
+    {
+      button8_count = button8.getCount();
+      basic_midi_controll(87, 8);
+    }
   }
   
   if(startup)
   {
     Serial.print("From the loop, start up value is ");
     Serial.println(startup);
-    delay(2000);
     startup = false;
   }
 }
