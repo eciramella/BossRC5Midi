@@ -14,9 +14,10 @@ ezButton button6(6, INPUT_PULLUP);
 ezButton button7(5, INPUT_PULLUP);
 ezButton button8(4, INPUT_PULLUP);
 
-int dbTime = 40;
-boolean reverse = false;
-boolean start = false;
+int dbTime = 50;
+bool reverse = false;
+//boolean start = false;
+bool startup = true;
 
 LiquidCrystal_I2C lcd1 (0x27, 16, 2);
 LiquidCrystal_I2C lcd2 (0x26, 16, 2);
@@ -41,7 +42,6 @@ void setup()
   button6.setDebounceTime(dbTime);
   button7.setDebounceTime(dbTime);
   button8.setDebounceTime(dbTime);
-
 
   lcd1.init();
   lcd1.backlight();
@@ -85,7 +85,6 @@ void setup()
   lcd7.print("Start/Stop      ");
   lcd8.print("Clear           ");
 
-
 /*
   Serial.println("INPUT_PULLUP is ");
   Serial.println(INPUT_PULLUP);
@@ -93,13 +92,12 @@ void setup()
   Serial.println(INTERNAL_PULLUP);
 */
 
-  delay(500);
+  delay(5000);
 }
 
 // https://static.roland.com/assets/media/pdf/RC-5_reference_eng01_W.pdf
 void loop()
 {
-
   button1.loop();
   button2.loop();
   button3.loop();
@@ -109,85 +107,90 @@ void loop()
   button7.loop();
   button8.loop();
 
-  if(button1.isReleased())
+  if(button1.isReleased()) // Memory up one
   {
-    Serial.println("button1 pressed");
-    MIDI.sendControlChange(80, 127, 1);
-    delay(50);
-    MIDI.sendControlChange(80, 0, 1);
-    Serial.println("leaving button1 pressed");
+    basic_midi_controll(80, 1);
   }
 
   if(button2.isReleased()) // Memory down one
   {
-    Serial.println("button2 pressed");
-    MIDI.sendControlChange(81, 127, 1);
-    delay(50);
-    MIDI.sendControlChange(81, 0, 1);
-    Serial.println("leaving button2 pressed");
+    basic_midi_controll(81, 2);
   }
 
   if(button3.isReleased()) // Redo/Undo
   {
-    Serial.println("button3 pressed");
-    MIDI.sendControlChange(82, 127, 1);
-    delay(50);
-    MIDI.sendControlChange(82, 0, 1);
-    Serial.println("leaving button3 pressed");
+    basic_midi_controll(82, 3);
   }
 
   if(button4.isReleased()) // Reverse
   {
-    reverse = !reverse;
-    if (reverse)
+    if (!startup)
     {
-      lcd4.clear();
-      lcd4.print("Reversing...    ");
-      MIDI.sendControlChange(83, 127, 1);
-      delay(50);
-    } 
-    else
-    {
-      lcd4.clear();
-      lcd4.print("Forward.....    ");
-      MIDI.sendControlChange(83, 0, 1);
-      delay(50);
+      reverse = !reverse;
+      if (reverse)
+      {
+        Serial.println("button4 pressed reversing");
+        lcd4.clear();
+        lcd4.print("Reversing...    ");
+        MIDI.sendControlChange(83, 127, 1);
+        delay(50);
+        Serial.println("leaving button4 pressed reversing");
+      } 
+      else
+      {
+        Serial.println("button4 pressed going forward");
+        lcd4.clear();
+        lcd4.print("Forward.....    ");
+        MIDI.sendControlChange(83, 0, 1);
+        delay(50);
+        Serial.println("leaving button4 pressed going forward");
+      }
     }
   }
 
   if (button5.isReleased()) // Start Rhythm
   {
-    MIDI.sendControlChange(84, 127, 1);
-    delay(50);
-    MIDI.sendControlChange(84, 0, 1);
+    basic_midi_controll(84, 5);
   }
 
   if (button6.isReleased()) // Stop Rhythm
   {
-    MIDI.sendControlChange(85, 127, 1);
-    delay(50);
-    MIDI.sendControlChange(85, 0, 1);
+    basic_midi_controll(85, 6);
   }
 
   if (button7.isReleased()) // Start/stop
   {
-    start = !start;
-    if (start)
-    {
-      MIDI.sendControlChange(86, 127, 1);
-      delay(50);
-    }
-    else 
-    {
-      MIDI.sendControlChange(86, 0, 1);
-      delay(50);
-    }
+    basic_midi_controll(86, 7);
   }
 
   if (button8.isReleased()) // Clear
   {
-    MIDI.sendControlChange(87, 127, 1);
+    basic_midi_controll(87, 8);
+  }
+  
+  if(startup)
+  {
+    Serial.print("From the loop, start up value is ");
+    Serial.println(startup);
+    delay(2000);
+    startup = false;
+  }
+}
+
+void basic_midi_controll(int midi_number, int button_number)
+{
+  Serial.print("startup is ");
+  Serial.println(startup);
+  if(!startup)
+  {
+    Serial.print("Button number ");
+    Serial.print(button_number);
+    Serial.println(" was pressed");
+    MIDI.sendControlChange(midi_number, 127, 1);
     delay(50);
-    MIDI.sendControlChange(87, 0, 1);
+    MIDI.sendControlChange(midi_number, 0, 1);
+    Serial.print("Leaving ");
+    Serial.print(button_number);
+    Serial.println(" pressed");
   }
 }
