@@ -1,2 +1,12 @@
 # BossRC5Midi
 Codebase for my BossRC5 Midi controller
+
+Things I found useful:
+
+https://www.reddit.com/r/guitarpedals/comments/jz014d/does_anyone_have_the_midi_control_assignments/
+
+Page 14 of this file in particular:
+https://static.roland.com/assets/media/pdf/RC-5_reference_eng01_W.pdf
+
+Someone's example:
+https://www.youtube.com/watch?v=ydvE6gHhRGA&list=LL&index=31&t=9s
