@@ -103,6 +103,7 @@ sendMidiValue(MIDI_CC_REVERSE, 0);    // Turn reverse off
 
 ### Variables
 - `reverse` - Tracks reverse toggle state (bool)
+- `drums_running` - Tracks whether drums are currently running (bool)
 - `startup` - Tracks first-run flag (bool)
 - `button_counts[]` - Local tracking of button press counts
 
@@ -124,10 +125,14 @@ Each button has its own handler function:
 - `void handleMemoryDown()` - Button 1: Track down
 - `void handleRedoUndo()` - Button 2: Redo/undo
 - `void handleReverse()` - Button 3: Toggle reverse mode
-- `void handleDrumStart()` - Button 4: Start rhythm
-- `void handleDrumStop()` - Button 5: Stop rhythm
+- `void handleDrumToggle()` - Button 5: Toggle drums on/off (see note below)
 - `void handleStartStop()` - Button 6: Start/stop recording
 - `void handleClear()` - Button 7: Clear loop
+
+**Note:** Button 4 is currently unused. Button 5 consolidates the drum start/stop functionality into a single toggle button that:
+  - First press: Starts drums, displays "Stop Drums"
+  - Second press: Stops drums, displays "Start Drums"
+  - Sends appropriate MIDI CC messages for both states
 
 #### `void sendBasicMidiControl(int buttonIndex)`
 Sends standard MIDI pulse for a button press.
@@ -173,11 +178,13 @@ All MIDI messages are sent on **channel 1** with the following control changes:
 | 2 | Track Down | 81 |
 | 3 | Redo/Undo | 82 |
 | 4 | Reverse (Toggle) | 83 |
-| 5 | Drum Start | 84 |
-| 6 | Drum Stop | 85 |
-| 7 | Start/Stop | 86 |
-| 8 | Clear | 87 |
+| 5 | Drums (Toggle) | 84 & 85 |
+| 6 | Start/Stop | 86 |
+| 7 | Clear | 87 |
+| (unused) | (none) | - |
 
-Most buttons send a pulse (on then off). Button 4 (Reverse) toggles between on and off states.
+Most buttons send a pulse (on then off). Button 4 (Reverse) and Button 5 (Drums) toggle between on and off states:
+- Button 4 toggles between forward (CC 83 = 0) and reverse (CC 83 = 127)
+- Button 5 toggles between drums off (CC 85 = pulse) and drums on (CC 84 = pulse)
 
 For details on RC-5 MIDI implementation, see the [Roland RC-5 Reference Manual](https://static.roland.com/assets/media/pdf/RC-5_reference_eng01_W.pdf) (page 14).

@@ -41,10 +41,12 @@ External resources, library documentation, and helpful links.
 | 2 | Track Down | 81 |
 | 3 | Redo/Undo | 82 |
 | 4 | Reverse (Toggle) | 83 |
-| 5 | Drum Start | 84 |
-| 6 | Drum Stop | 85 |
-| 7 | Start/Stop | 86 |
-| 8 | Clear | 87 |
+| 5 | Drums (Toggle) | 84 & 85 |
+| 6 | Start/Stop | 86 |
+| 7 | Clear | 87 |
+| 8 | (unused) | - |
+
+**Drum Toggle (Button 5):** Press once to start, press again to stop. Displays "Start Drums" when stopped and "Stop Drums" when running.
 
 For complete MIDI mapping details, see page 14 of the [Boss RC-5 Reference Manual](https://static.roland.com/assets/media/pdf/RC-5_reference_eng01_W.pdf).
 
