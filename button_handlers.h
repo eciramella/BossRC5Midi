@@ -5,8 +5,6 @@
 #include "displays.h"
 #include "midi_controller.h"
 
-bool reverse = false;
-bool drums_running = false;
 bool startup = true;
 
 void handleButton(int buttonIndex) {
@@ -18,11 +16,11 @@ void handleButton(int buttonIndex) {
     case 0: handleMemoryUp(); break;
     case 1: handleMemoryDown(); break;
     case 2: handleRedoUndo(); break;
-    case 3: handleReverse(); break;
+    case 3: handleClear(); break;
     case 4: handleTapTempo(); break;
-    case 5: handleDrumToggle(); break;
-    case 6: handleAllStartStop(); break;
-    case 7: handleClear(); break;
+    case 5: handleDrumStart(); break;
+    case 6: handleDrumStop(); break;
+    case 7: handleAllStartStop(); break;
   }
 }
 
@@ -43,34 +41,25 @@ void handleRedoUndo() {
 }
 
 void handleTapTempo() {
-  sendBasicMidiControl(3);
+  sendBasicMidiControl(4);
 }
 
-void handleDrumToggle() {
-  if (!startup) {
-    drums_running = !drums_running;
-    if (drums_running) {
-      Serial.println("button6 pressed starting drums");
-      displayMessage(5, "Stop Drums      ");
-      sendMidiPulse(MIDI_CC_DRUM_START);
-      Serial.println("leaving button6 starting drums");
-    } else {
-      Serial.println("button6 pressed stopping drums");
-      displayMessage(5, "Start Drums     ");
-      sendMidiPulse(MIDI_CC_DRUM_STOP);
-      Serial.println("leaving button6 stopping drums");
-    }
-  }
+void handleDrumStart() {
+  sendBasicMidiControl(5);
 }
 
-void handleAllStartStop() {
+void handleDrumStop() {
   sendBasicMidiControl(6);
 }
 
+void handleAllStartStop() {
+  sendBasicMidiControl(7);
+}
+
 void handleClear() {
-  if (button_counts[7] != buttons[7].getCount()) {
-    button_counts[7] = buttons[7].getCount();
-    sendBasicMidiControl(7);
+  if (button_counts[3] != buttons[3].getCount()) {
+    button_counts[3] = buttons[3].getCount();
+    sendBasicMidiControl(3);
   }
 }
 
