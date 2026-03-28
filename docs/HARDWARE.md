@@ -70,9 +70,9 @@ Arduino MIDI library typically uses Serial (TX pin) for output.
 | 12 | 2 | Display 2 | Track Down |
 | 11 | 3 | Display 3 | Redo/Undo |
 | 10 | 4 | Display 4 | Reverse |
-| 9  | 5 | Display 5 | Drum Start |
-| 6  | 6 | Display 6 | Drum Stop |
-| 5  | 7 | Display 7 | Start/Stop |
+| 9  | 5 | Display 5 | Drums (Toggle) |
+| 6  | 6 | Display 6 | Start/Stop |
+| 5  | 7 | Display 7 | (unused) |
 | 4  | 8 | Display 8 | Clear |
 
 ## Libraries Required

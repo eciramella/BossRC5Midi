@@ -11,8 +11,8 @@ const char* DISPLAY_LABELS[NUM_DISPLAYS] = {
   "Track Down      ",
   "Redo/Undo       ",
   "Forward.....    ",
-  "Drum Start      ",
-  "Drum Stop       ",
+  "(unused)        ",
+  "Start Drums     ",
   "Start/Stop      ",
   "Clear           "
 };
