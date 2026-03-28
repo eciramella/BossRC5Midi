@@ -105,7 +105,13 @@ sendMidiValue(MIDI_CC_REVERSE, 0);    // Turn reverse off
 - `reverse` - Tracks reverse toggle state (bool)
 - `drums_running` - Tracks whether drums are currently running (bool)
 - `startup` - Tracks first-run flag (bool)
+- `last_tap_time` - Timestamp of last tap tempo press (unsigned long)
+- `tap_count` - Number of taps detected (int)
 - `button_counts[]` - Local tracking of button press counts
+
+### Constants
+- `TAP_TEMPO_TIMEOUT` - Reset tap tempo if no tap for 3 seconds (3000ms)
+- `MIN_TAP_INTERVAL` - Minimum milliseconds between taps (100ms)
 
 ### Functions
 
@@ -125,14 +131,10 @@ Each button has its own handler function:
 - `void handleMemoryDown()` - Button 1: Track down
 - `void handleRedoUndo()` - Button 2: Redo/undo
 - `void handleReverse()` - Button 3: Toggle reverse mode
-- `void handleDrumToggle()` - Button 5: Toggle drums on/off (see note below)
-- `void handleStartStop()` - Button 6: Start/stop recording
+- `void handleTapTempo()` - Button 4: Tap tempo detection (calculates BPM)
+- `void handleDrumToggle()` - Button 5: Toggle drums on/off
+- `void handleAllStartStop()` - Button 6: Start/stop all recording
 - `void handleClear()` - Button 7: Clear loop
-
-**Note:** Button 4 is currently unused. Button 5 consolidates the drum start/stop functionality into a single toggle button that:
-  - First press: Starts drums, displays "Stop Drums"
-  - Second press: Stops drums, displays "Start Drums"
-  - Sends appropriate MIDI CC messages for both states
 
 #### `void sendBasicMidiControl(int buttonIndex)`
 Sends standard MIDI pulse for a button press.
@@ -141,6 +143,15 @@ Sends standard MIDI pulse for a button press.
 
 **Parameters:**
 - `buttonIndex` - Which button (0-7)
+
+#### `void handleTapTempo()`
+Detects tempo from tap timing.
+- First tap initializes, second and subsequent taps calculate BPM
+- Minimum 100ms between taps to avoid false detection
+- Resets tap count if no tap for 3 seconds (TAP_TEMPO_TIMEOUT)
+- Displays "Tempo Detected" briefly, then returns to "Tap Tempo"
+- Prints detected BPM to serial output for debugging
+- Sends MIDI pulse when tempo is calculated
 
 #### Utility Functions
 
@@ -178,13 +189,15 @@ All MIDI messages are sent on **channel 1** with the following control changes:
 | 2 | Track Down | 81 |
 | 3 | Redo/Undo | 82 |
 | 4 | Reverse (Toggle) | 83 |
-| 5 | Drums (Toggle) | 84 & 85 |
-| 6 | Start/Stop | 86 |
-| 7 | Clear | 87 |
-| (unused) | (none) | - |
+| 5 | Tap Tempo | (calculated from tap timing) |
+| 6 | Drum Start/Stop | 84 & 85 |
+| 7 | All Start/Stop | 86 |
+| 8 | Clear | 87 |
 
-Most buttons send a pulse (on then off). Button 4 (Reverse) and Button 5 (Drums) toggle between on and off states:
-- Button 4 toggles between forward (CC 83 = 0) and reverse (CC 83 = 127)
-- Button 5 toggles between drums off (CC 85 = pulse) and drums on (CC 84 = pulse)
+**Button Behaviors:**
+- Button 4 (Reverse): Toggles between forward (CC 83 = 0) and reverse (CC 83 = 127)
+- Button 5 (Tap Tempo): Detects tempo from tap timing and sends MIDI pulse when tempo is calculated
+- Button 6 (Drum Start/Stop): Toggles between drums off (CC 85 pulse) and drums on (CC 84 pulse)
+- Most other buttons send a pulse (on then off)
 
 For details on RC-5 MIDI implementation, see the [Roland RC-5 Reference Manual](https://static.roland.com/assets/media/pdf/RC-5_reference_eng01_W.pdf) (page 14).
