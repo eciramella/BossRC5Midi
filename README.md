@@ -40,17 +40,17 @@ External resources, library documentation, and helpful links.
 | 1 | Track Up | 80 |
 | 2 | Track Down | 81 |
 | 3 | Redo/Undo | 82 |
-| 4 | Reverse (Toggle) | 83 |
-| 5 | Tap Tempo | (calculates from tap timing) |
-| 6 | Drum Start/Stop | 84 & 85 |
-| 7 | All Start/Stop | 86 |
-| 8 | Clear | 87 |
+| 4 | Clear | 87 |
+| 5 | Tap Tempo | 83 |
+| 6 | Drum Start | 84 |
+| 7 | Drum Stop | 85 |
+| 8 | All Start/Stop | 86 |
 
-**Tap Tempo (Button 5):** Press repeatedly to set the tempo. Each tap after the first is analyzed to calculate BPM, which is sent to the RC-5.
+**Tap Tempo (Button 4):** Press to send tap tempo signal to the RC-5.
 
-**Drum Start/Stop (Button 6):** Toggle drums on/off with state tracking.
+**Drum Start/Stop (Button 5):** Toggle drums on/off with state tracking.
 
-**All Start/Stop (Button 7):** Start or stop the entire recording/playback.
+**All Start/Stop (Button 6):** Start or stop the entire recording/playback.
 
 For complete MIDI mapping details, see page 14 of the [Boss RC-5 Reference Manual](https://static.roland.com/assets/media/pdf/RC-5_reference_eng01_W.pdf).
 

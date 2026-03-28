@@ -10,11 +10,11 @@ const char* DISPLAY_LABELS[NUM_DISPLAYS] = {
   "Track Up        ",
   "Track Down      ",
   "Redo/Undo       ",
-  "Forward.....    ",
+  "Clear           ",
   "Tap Tempo       ",
-  "Drum Start/Stop ",
-  "All Start/Stop  ",
-  "Clear           "
+  "Drum Start      ",
+  "Drum Stop       ",
+  "All Start/Stop  "
 };
 
 LiquidCrystal_I2C displays[NUM_DISPLAYS] = {
