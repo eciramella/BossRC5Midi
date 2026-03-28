@@ -130,11 +130,10 @@ Each button has its own handler function:
 - `void handleMemoryUp()` - Button 0: Track up
 - `void handleMemoryDown()` - Button 1: Track down
 - `void handleRedoUndo()` - Button 2: Redo/undo
-- `void handleReverse()` - Button 3: Toggle reverse mode
-- `void handleTapTempo()` - Button 4: Tap tempo detection (calculates BPM)
-- `void handleDrumToggle()` - Button 5: Toggle drums on/off
-- `void handleAllStartStop()` - Button 6: Start/stop all recording
-- `void handleClear()` - Button 7: Clear loop
+- `void handleTapTempo()` - Button 3: Send tap tempo signal
+- `void handleDrumToggle()` - Button 4: Toggle drums on/off
+- `void handleAllStartStop()` - Button 5: Start/stop all recording
+- `void handleClear()` - Button 6: Clear loop
 
 #### `void sendBasicMidiControl(int buttonIndex)`
 Sends standard MIDI pulse for a button press.
@@ -188,16 +187,14 @@ All MIDI messages are sent on **channel 1** with the following control changes:
 | 1 | Track Up | 80 |
 | 2 | Track Down | 81 |
 | 3 | Redo/Undo | 82 |
-| 4 | Reverse (Toggle) | 83 |
-| 5 | Tap Tempo | (calculated from tap timing) |
-| 6 | Drum Start/Stop | 84 & 85 |
-| 7 | All Start/Stop | 86 |
-| 8 | Clear | 87 |
+| 4 | Tap Tempo | 83 |
+| 5 | Drum Start/Stop | 84 & 85 |
+| 6 | All Start/Stop | 86 |
+| 7 | Clear | 87 |
 
 **Button Behaviors:**
-- Button 4 (Reverse): Toggles between forward (CC 83 = 0) and reverse (CC 83 = 127)
-- Button 5 (Tap Tempo): Detects tempo from tap timing and sends MIDI pulse when tempo is calculated
-- Button 6 (Drum Start/Stop): Toggles between drums off (CC 85 pulse) and drums on (CC 84 pulse)
+- Button 4 (Tap Tempo): Sends MIDI pulse on CC 83 when pressed
+- Button 5 (Drum Start/Stop): Toggles between drums off (CC 85 pulse) and drums on (CC 84 pulse)
 - Most other buttons send a pulse (on then off)
 
 For details on RC-5 MIDI implementation, see the [Roland RC-5 Reference Manual](https://static.roland.com/assets/media/pdf/RC-5_reference_eng01_W.pdf) (page 14).
