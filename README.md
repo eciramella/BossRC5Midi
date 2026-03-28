@@ -40,10 +40,11 @@ External resources, library documentation, and helpful links.
 | 1 | Track Up | 80 |
 | 2 | Track Down | 81 |
 | 3 | Redo/Undo | 82 |
-| 4 | Tap Tempo | 83 |
-| 5 | Drum Start/Stop | 84 & 85 |
-| 6 | All Start/Stop | 86 |
-| 7 | Clear | 87 |
+| 4 | Clear | 87 |
+| 5 | Tap Tempo | 83 |
+| 6 | Drum Start | 84 |
+| 7 | Drum Stop | 85 |
+| 8 | All Start/Stop | 86 |
 
 **Tap Tempo (Button 4):** Press to send tap tempo signal to the RC-5.
 

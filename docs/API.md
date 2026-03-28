@@ -127,13 +127,14 @@ Main dispatcher for button events.
 
 Each button has its own handler function:
 
-- `void handleMemoryUp()` - Button 0: Track up
-- `void handleMemoryDown()` - Button 1: Track down
-- `void handleRedoUndo()` - Button 2: Redo/undo
-- `void handleTapTempo()` - Button 3: Send tap tempo signal
-- `void handleDrumToggle()` - Button 4: Toggle drums on/off
-- `void handleAllStartStop()` - Button 5: Start/stop all recording
-- `void handleClear()` - Button 6: Clear loop
+- `void handleMemoryUp()` - Button 1: Track up
+- `void handleMemoryDown()` - Button 2: Track down
+- `void handleRedoUndo()` - Button 3: Redo/undo
+- `void handleClear()` - Button 4: Clear loop
+- `void handleTapTempo()` - Button 5: Send tap tempo signal
+- `void handleDrumStart()` - Button 6: Start drums
+- `void handleDrumStop()` - Button 7: Stop drums
+- `void handleAllStartStop()` - Button 8: Start/stop all recording
 
 #### `void sendBasicMidiControl(int buttonIndex)`
 Sends standard MIDI pulse for a button press.
